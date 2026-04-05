@@ -1,0 +1,4 @@
+interface:
+  display_name: "PNPM Trusted Release"
+  short_description: "Publish pnpm monorepos to npm with provenance"
+  default_prompt: "Use $pnpm-monorepo-trusted-publishing to set up or debug a pnpm monorepo release pipeline with npm Trusted Publishing."
