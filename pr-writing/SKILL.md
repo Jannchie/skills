@@ -100,6 +100,24 @@ AS IS 只描述"坏了的现状"。**不要在这里写修复方案**，那是 T
 
 CI 状态只在你最近确实看过且通过时再提，并指明哪个 check。
 
+## 关联 issue / 工单
+
+有关联的 issue / 工单时，单独列在 PR 正文末尾，**用列表条目而不是行内引用**：
+
+```markdown
+- resolves #123
+- refs JIRA-4567
+```
+
+为什么必须是列表条目：GitHub 在条目里渲染 `#123` 时会展开成 issue 标题，行内的 `#123` 只显示编号。同理 cross-repo `owner/repo#123`、外部工单 ID（Linear、JIRA、Sentry）也都要走条目格式才有 hover 预览。
+
+关键词选择（决定 merge 时是否自动关闭 issue）：
+
+- `resolves` / `fixes` / `closes`：merge 后自动关闭对应 issue。**只用在这个 PR 真的解决该 issue 时**
+- `refs` / `related to`：只关联不关闭，用于"这个 PR 部分推进了某 issue"或"修复但未关闭，因为还有后续工作"
+
+每个引用占一个条目；不要在一条里塞两个编号（`- resolves #1, #2` 会丢预览）。
+
 ## 其他场景的变体
 
 AS IS / TO BE 是"修复某个明确问题"的天然模板。其他场景在不改变骨架的前提下调整两段的内涵：
@@ -131,7 +149,7 @@ PR 太小时不必硬套 AS IS / TO BE：
 >
 > 触发：单用户同时打开两个 tab 都触发自动刷新；mobile 客户端在弱网下重试。
 >
-> 影响：5 分钟会话劫持窗口；安全工单 SEC-431。
+> 影响：5 分钟会话劫持窗口。
 >
 > ## TO BE
 >
@@ -141,6 +159,11 @@ PR 太小时不必硬套 AS IS / TO BE：
 > - 新增 `test_concurrent_refresh_keeps_single_token`
 > - CI 全量 green（pytest + integration）
 > - 手动两个 curl 并发触发，Redis 始终只有一份有效 token
+>
+> ---
+>
+> - resolves #842
+> - refs SEC-431
 
 ## 砍掉的内容
 
@@ -162,6 +185,7 @@ PR 太小时不必硬套 AS IS / TO BE：
 - 有没有"提升了安全性"这种空话？后面有没有跟上"具体收紧了哪个边界"？
 - 是否过度承诺？只跑了 unit test 就别说 "all tests pass"，写实际跑了什么。
 - 标题符合 Conventional Commits 格式（`type(scope): subject`）、≤ 70 字符、单独看能判断要不要点开？
+- 有关联 issue 时，是否以列表条目形式列出（`- resolves #123`）而不是行内提及？
 
 ## 失败模式
 
