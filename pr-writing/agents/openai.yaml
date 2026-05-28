@@ -1,0 +1,4 @@
+interface:
+  display_name: "PR Writing"
+  short_description: "Write concise GitHub PR descriptions with the AS IS / TO BE structure."
+  default_prompt: "Draft or rewrite this PR description following the pr-writing skill (default to AS IS / TO BE)."
